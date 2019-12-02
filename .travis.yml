@@ -6,7 +6,7 @@ services:
     - docker build -t wrdecker921/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true wrdecker921/teact-test npm test -- --coverage
+  - docker run -e CI=true wrdecker921/react-test npm test -- --coverage
 
 after_success:
   - docker build -t wrdecker921/multi-client ./client
