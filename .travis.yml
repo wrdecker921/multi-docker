@@ -14,7 +14,7 @@ after_success:
   - docker build -t wrdecker921/multi-server ./server
   - docker build -t wrdecker921/multi-worker ./worker
   # log into docker CLI
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-standin  
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin  
   # Take imags and push those images to Docker hub
   - docker push wrdecker921/multi-client 
   - docker push wrdecker921/multi-nginx  
