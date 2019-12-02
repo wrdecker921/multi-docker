@@ -9,14 +9,14 @@ script:
   - docker run -e CI=true wrdecker921/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t wrdecker921/testing ./client
+  - docker build -t wrdecker921/multi-client ./client
   - docker build -t wrdecker921/multi-nginx ./nginx
   - docker build -t wrdecker921/multi-server ./server
   - docker build -t wrdecker921/multi-worker ./worker
   # log into docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take imags and push those images to Docker hub, adding a random note
-  - docker push wrdecker921/testing
   - docker push wrdecker921/multi-nginx
   - docker push wrdecker921/multi-server
   - docker push wrdecker921/multi-worker
+  - docker push wrdecker921/multi-client
