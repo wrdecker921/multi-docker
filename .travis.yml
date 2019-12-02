@@ -1,0 +1,25 @@
+sude: required
+services:
+  - docker
+
+  before_install:
+    - docker build -t wrdecker921/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true wrdecker921/teact-test npm test -- --coverage
+
+after_success:
+  - docker build -t wrdecker921/multi-client ./client
+  - docker build -t wrdecker921/multi-nginx ./nginx
+  - docker build -t wrdecker921/multi-server ./server
+  - docker build -t wrdecker921/multi-worker ./worker
+  # log into docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-standin  
+  # Take imags and push those images to Docker hub
+  - docker push wrdecker921/multi-client 
+  - docker push wrdecker921/multi-nginx  
+  - docker push wrdecker921/multi-server 
+  - docker push wrdecker921/multi-worker 
+
+
+
